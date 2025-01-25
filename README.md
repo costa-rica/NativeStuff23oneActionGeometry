@@ -2,7 +2,7 @@
 
 ## Description
 
-React native mobile app testing template. Set up with navigation to access different screens in screens/.
+React Native app using gestures and svg with logic using geometry to implement visual boundaries and gesture boundaries
 
 ## Installations
 
