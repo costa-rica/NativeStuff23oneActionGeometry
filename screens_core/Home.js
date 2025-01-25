@@ -17,9 +17,17 @@ export default function Home({ navigation }) {
       <ScrollView>
         <View style={styles.vwButtons}>
           <BtnHomNav
+            goTo={"Test10"}
+            title={"Test10"}
+            description={"4-12 trianlges: Geometric functions "}
+            navigation={navigation}
+          />
+          <BtnHomNav
             goTo={"Test09"}
             title={"Test09 "}
-            description={"4 triangles: Geometric functions to test boundaries "}
+            description={
+              "4 triangles Mid 8 Outer: Geometric functions to test boundaries "
+            }
             navigation={navigation}
           />
           <BtnHomNav
