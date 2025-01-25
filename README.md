@@ -4,14 +4,6 @@
 
 React native mobile app testing template. Set up with navigation to access different screens in screens/.
 
-## Environment Variables
-
-- store in: .env.local
-
-```env
-EXPO_PUBLIC_API_URL=http://192.168.1.193:3000
-```
-
 ## Installations
 
 ### 1. Navigation
@@ -21,27 +13,20 @@ yarn add @react-navigation/native @react-navigation/native-stack
 npx expo install react-native-screens react-native-safe-area-context
 ```
 
-## Rename project
+### 2. Gesture
 
-To clone: `git clone git@github.com:costa-rica/NativeStuffTemplate.git <optional new folder name>`
+`react-native-gesture-handler`
 
-### 1. app.json
+### 3. svg
 
-```
-{
-  "expo": {
-    "name": "NewAppName",
-    "slug": "new-app-name",
-    ...
-  }
-}
-```
+`react-native-svg`
 
-### 2. package.json
+## Screens / Prototypes
 
-```
-{
-  "name": "new-app-name",
-  ...
-}
-```
+### Test09.js (Prototype 4-8)
+
+- uses SwipePadGeoFunc01.js
+
+#### Configure of SwipePadGeoFunc01
+
+- styleVwMiddleCircle is transformed `transform: [{ rotate: "-45deg" }],`

@@ -17,6 +17,18 @@ export default function Home({ navigation }) {
       <ScrollView>
         <View style={styles.vwButtons}>
           <BtnHomNav
+            goTo={"Test09"}
+            title={"Test09 "}
+            description={"4 triangles: Geometric functions to test boundaries "}
+            navigation={navigation}
+          />
+          <BtnHomNav
+            goTo={"Test08"}
+            title={"Test08 from NativeStuff22"}
+            description={"taken from NativeStuff22 Test08"}
+            navigation={navigation}
+          />
+          <BtnHomNav
             goTo={"WelcomeScreen"}
             title={"Welcome Screen"}
             description={"How this works"}
