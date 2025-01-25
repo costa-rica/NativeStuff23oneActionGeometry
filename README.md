@@ -25,6 +25,8 @@ npx expo install react-native-screens react-native-safe-area-context
 
 ### Test09.js (Prototype 4-8)
 
+This version uses geometric functions logic _ Best Version _
+
 - uses SwipePadGeoFunc01.js
 
 #### Configure of SwipePadGeoFunc01
