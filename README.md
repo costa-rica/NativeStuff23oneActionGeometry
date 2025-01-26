@@ -17,11 +17,8 @@ yarn add @react-navigation/native @react-navigation/native-stack
 npx expo install react-native-screens react-native-safe-area-context
 ```
 
-2. Gesture
-   `yarn add react-native-gesture-handler`
-3. svg
-
-`yarn addreact-native-svg`
+2. Gesture`yarn add react-native-gesture-handler`
+3. svg`yarn addreact-native-svg`
 
 ## Key geometric formulas used
 
