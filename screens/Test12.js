@@ -7,21 +7,26 @@ import {
 } from "react-native-gesture-handler";
 import ViewTemplate from "../screens_core/components/ViewTemplate";
 import ButtonKv from "../screens_core/components/ButtonKv";
-import SwipePadGeoFunc02 from "./components/SwipePadGeoFunc02";
+import SwipePadGeoFunc03 from "./components/SwipePadGeoFunc03";
+import { Polygon, Svg, Circle } from "react-native-svg";
 
-export default function Test10({ navigation }) {
+export default function Test12({ navigation }) {
   const [padVisible, setPadVisible] = useState(false);
   const [padPositionCenter, setPadPositionCenter] = useState({ x: 0, y: 0 });
   const [actionList, setActionList] = useState([]);
-  const [tapDetails, setTapDetails] = useState(null);
+  const [tapDetails, setTapDetails] = useState({
+    timestamp: "no date",
+    padPosCenterX: 0,
+    padPosCenterY: 0,
+  });
   const [tapIsActive, setTapIsActive] = useState(true);
   const [currentActionType, setCurrentActionType] = useState(null);
 
   const circleRadiusMiddle = 50;
   const circleRadiusInner = 25; // this can change no problem
   const circleRadiusOuter = 175; // this needs to be twice the circleRadiusMiddle
-  const numTrianglesMiddle = 4;
-  const numTrianglesOuter = 12;
+  const numTrianglesMiddle = 5;
+  const numTrianglesOuter = 10;
 
   const defaultColors = {
     1: "rgba(125, 150, 100, 0.5)", // right
@@ -159,110 +164,98 @@ export default function Test10({ navigation }) {
     const inInnerCircle = distanceFromCenter < circleRadiusInner;
 
     // Y dependent
-    const boundary15Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 15); // ? parts to circle, 15 degrees
-    const boundary30Y =
-      relativeToPadCenterX * Math.tan((Math.PI / 180) * (360 / 12)); // 12 parts to circle
-    const boundary45Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 45); // 8 parts to circle 45 = 360/8
-    // X dependent
-    const boundary15X =
-      relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 15));
-    const boundary30X =
-      relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 30));
-    const boundary45X =
-      relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 45));
-    const boundary60X =
-      relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 60));
-    const boundary75X =
-      relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 75));
+    const boundary345Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 345); // sector 1 beginning
+    const boundary57Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 57); // sector 1 end sector 2 begin
+    const boundary21Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 21); // sector 1-1 end 1-2 begin
+    const boundary129Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 129); // sector 2 end 3begin
+    const boundary93Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 93); // splits sector 2
+    const boundary201Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 201); // sector 3-1 top end
+    const boundary165Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 165); // sector 3-1 top end
+    const boundary273Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 273); // sector 4 end 5 begin
+    const boundary237Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 237); // splits sector 4
+    const boundary309Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 309); // splits sector 5
 
-    // const boundary270 =
-    //   relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 270));
-    // const boundary300 =
-    //   relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 300));
-    // const boundary315 =
-    //   relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 315));
-    // const boundary330 =
-    //   relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 330));
-    // const boundary345 =
-    //   relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 345));
     if (inInnerCircle) {
       handleSwipeColorChange("center");
       setCurrentActionType(null);
     } else {
-      // console.log(`relativeToPadCenterX: ${relativeToPadCenterX}`);
-      // console.log(
-      //   `b30: ${boundary30Y},b15: ${boundary15Y}, when y: ${relativeToPadCenterY}`
-      // );
-      // console.log(
-      //   `b45X: ${boundary45X}, b60X: ${boundary60X}, b75X: ${boundary75X}  when x: ${relativeToPadCenterX}`
-      // );
-
-      if (Math.abs(relativeToPadCenterY) < boundary45Y) {
-        // Right side
+      if (
+        relativeToPadCenterY > boundary345Y &&
+        relativeToPadCenterY < boundary57Y
+      ) {
+        // Right (bottom - ish) side (sector 1)
         handleSwipeColorChange(1);
         setCurrentActionType(1);
 
-        if (-relativeToPadCenterY > boundary15Y) {
-          // setSwipeColorDict(defaultColors);
-          handleSwipeColorChange(1, 16);
-          setCurrentActionType(16);
-        } else if (Math.abs(relativeToPadCenterY) < boundary15Y) {
-          // setSwipeColorDict(defaultColors);
-          handleSwipeColorChange(1, 5);
-          setCurrentActionType(5);
-        } else {
+        if (relativeToPadCenterY < boundary21Y) {
           handleSwipeColorChange(1, 6);
           setCurrentActionType(6);
+        } else {
+          handleSwipeColorChange(1, 7);
+          setCurrentActionType(7);
         }
-      } else if (relativeToPadCenterY > Math.abs(boundary45Y)) {
-        // Bottom
+      } else if (
+        relativeToPadCenterY > boundary57Y &&
+        relativeToPadCenterY > boundary129Y
+      ) {
+        // Bottom (sector 2)
         handleSwipeColorChange(2);
         setCurrentActionType(2);
 
-        if (relativeToPadCenterX > boundary75X) {
-          handleSwipeColorChange(2, 7);
-          setCurrentActionType(7);
-        } else if (Math.abs(relativeToPadCenterX) < boundary75X) {
+        if (relativeToPadCenterY > boundary93Y) {
           handleSwipeColorChange(2, 8);
           setCurrentActionType(8);
         } else {
           handleSwipeColorChange(2, 9);
           setCurrentActionType(9);
         }
-      } else if (relativeToPadCenterY > boundary45Y) {
+      }
+      //
+      else if (
+        // relativeToPadCenterY < -boundary231Y &&
+        relativeToPadCenterY > boundary201Y
+      ) {
         // Left
         handleSwipeColorChange(3);
         setCurrentActionType(3);
 
-        if (relativeToPadCenterY > Math.abs(boundary15Y)) {
-          // setSwipeColorDict(defaultColors);
+        if (relativeToPadCenterY > boundary165Y) {
+          // line that splits the the outer sectors and cuts the middle sector in half
           handleSwipeColorChange(3, 10);
           setCurrentActionType(10);
-        } else if (relativeToPadCenterY > boundary15Y) {
-          // setSwipeColorDict(defaultColors);
+        } else {
           handleSwipeColorChange(3, 11);
           setCurrentActionType(11);
-        } else {
-          handleSwipeColorChange(3, 12);
-          setCurrentActionType(12);
         }
-      } else if (relativeToPadCenterY < boundary45Y) {
-        // Top
+      }
+      //
+      else if (
+        relativeToPadCenterY < boundary273Y
+        // &&
+        // relativeToPadCenterY > boundary201Y
+      ) {
+        // Top Left
         handleSwipeColorChange(4);
         setCurrentActionType(4);
 
-        if (relativeToPadCenterX < boundary75X) {
+        if (relativeToPadCenterY > boundary237Y) {
+          handleSwipeColorChange(4, 12);
+          setCurrentActionType(12);
+        } else {
           handleSwipeColorChange(4, 13);
           setCurrentActionType(13);
-        } else if (relativeToPadCenterX < Math.abs(boundary75X)) {
-          handleSwipeColorChange(4, 14);
-          setCurrentActionType(14);
-        } else {
-          handleSwipeColorChange(4, 15);
-          setCurrentActionType(15);
         }
       } else {
-        setSwipeColorDict(defaultColors);
+        // setSwipeColorDict(defaultColors);
+        handleSwipeColorChange(5);
+        setCurrentActionType(5);
+        if (relativeToPadCenterY < boundary309Y) {
+          handleSwipeColorChange(5, 14);
+          setCurrentActionType(14);
+        } else {
+          handleSwipeColorChange(5, 15);
+          setCurrentActionType(15);
+        }
       }
     }
   });
@@ -293,13 +286,31 @@ export default function Test10({ navigation }) {
     gestureSwipeOnChange
   );
 
-  // Dynamic Styles
+  // ----- Dynamic Styles -----------------
   const styleVwMainPosition = {
     position: "absolute",
     left: padPositionCenter.x, // Center modal horizontally
     top: padPositionCenter.y, // Center modal vertically
   };
 
+  const styleVwBoundary = {
+    position: "absolute",
+    left: padPositionCenter.x, // Center modal horizontally
+    top: padPositionCenter.y, // Center modal vertically
+    width: circleRadiusOuter * 2,
+    height: circleRadiusOuter * 2,
+    // backgroundColor: "rgba(125, 100, 150, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+
+  const styleSvgBoundary = {
+    // top: circleRadiusOuter
+    // backgroundColor: "green",
+    // top: 50,
+  };
+
+  // ---- JSX --------------------
   return (
     <ViewTemplate navigation={navigation}>
       <GestureHandlerRootView style={styles.container}>
@@ -325,9 +336,41 @@ export default function Test10({ navigation }) {
                 })}
             </View>
             <Text style={styles.tapText}>Tap anywhere inside this view</Text>
-
+            {/* These are used to identify the boundaries */}
+            <View style={styleVwBoundary}>
+              <Svg
+                height={circleRadiusOuter * 2}
+                width={circleRadiusOuter * 2}
+                style={styleSvgBoundary}
+              >
+                <Polygon
+                  // key={index}
+                  points={`${circleRadiusOuter},${circleRadiusOuter} ${
+                    circleRadiusOuter +
+                    circleRadiusOuter * Math.cos((Math.PI / 180) * 345)
+                  },${
+                    circleRadiusOuter +
+                    circleRadiusOuter * Math.sin((Math.PI / 180) * 345)
+                  }`}
+                  stroke="black" // Stroke color
+                  strokeWidth="2" // Thickness of the stroke
+                />
+                <Polygon
+                  // key={index}
+                  points={`${circleRadiusOuter},${circleRadiusOuter} ${
+                    circleRadiusOuter +
+                    circleRadiusOuter * Math.cos((Math.PI / 180) * 273)
+                  },${
+                    circleRadiusOuter +
+                    circleRadiusOuter * Math.sin((Math.PI / 180) * 273)
+                  }`}
+                  stroke="black" // Stroke color
+                  strokeWidth="2" // Thickness of the stroke
+                />
+              </Svg>
+            </View>
             {padVisible && (
-              <SwipePadGeoFunc02
+              <SwipePadGeoFunc03
                 circleRadiusInner={circleRadiusInner}
                 circleRadiusMiddle={circleRadiusMiddle}
                 styleVwMainPosition={styleVwMainPosition}

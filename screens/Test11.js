@@ -7,9 +7,9 @@ import {
 } from "react-native-gesture-handler";
 import ViewTemplate from "../screens_core/components/ViewTemplate";
 import ButtonKv from "../screens_core/components/ButtonKv";
-import SwipePadGeoFunc02 from "./components/SwipePadGeoFunc02";
+import SwipePadGeoFunc03 from "./components/SwipePadGeoFunc03";
 
-export default function Test10({ navigation }) {
+export default function Test11({ navigation }) {
   const [padVisible, setPadVisible] = useState(false);
   const [padPositionCenter, setPadPositionCenter] = useState({ x: 0, y: 0 });
   const [actionList, setActionList] = useState([]);
@@ -20,8 +20,8 @@ export default function Test10({ navigation }) {
   const circleRadiusMiddle = 50;
   const circleRadiusInner = 25; // this can change no problem
   const circleRadiusOuter = 175; // this needs to be twice the circleRadiusMiddle
-  const numTrianglesMiddle = 4;
-  const numTrianglesOuter = 12;
+  const numTrianglesMiddle = 5;
+  const numTrianglesOuter = 10;
 
   const defaultColors = {
     1: "rgba(125, 150, 100, 0.5)", // right
@@ -160,108 +160,143 @@ export default function Test10({ navigation }) {
 
     // Y dependent
     const boundary15Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 15); // ? parts to circle, 15 degrees
+    const boundary21Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 21); // ? parts to circle, 15 degrees
     const boundary30Y =
       relativeToPadCenterX * Math.tan((Math.PI / 180) * (360 / 12)); // 12 parts to circle
     const boundary45Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 45); // 8 parts to circle 45 = 360/8
+    const boundary60Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 60); // ? 60 degrees
+    const boundary72Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 72); // 5 parts to circle 72 = 360/5
+    // 5 circle rotated -15 degrees ==> 72-15 = 57
+    const boundary50Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 50); // ? 60 degrees
+    const boundary57Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 57); // ? 60 degrees
+
     // X dependent
     const boundary15X =
       relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 15));
     const boundary30X =
       relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 30));
+    const boundary39X =
+      relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 39));
     const boundary45X =
       relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 45));
+    const boundary57X =
+      relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 57));
     const boundary60X =
       relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 60));
     const boundary75X =
       relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 75));
+    const boundary129X =
+      relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 129));
 
-    // const boundary270 =
-    //   relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 270));
-    // const boundary300 =
-    //   relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 300));
-    // const boundary315 =
-    //   relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 315));
-    // const boundary330 =
-    //   relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 330));
-    // const boundary345 =
-    //   relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 345));
     if (inInnerCircle) {
       handleSwipeColorChange("center");
       setCurrentActionType(null);
     } else {
       // console.log(`relativeToPadCenterX: ${relativeToPadCenterX}`);
       // console.log(
-      //   `b30: ${boundary30Y},b15: ${boundary15Y}, when y: ${relativeToPadCenterY}`
+      //   `,b50: ${boundary50Y},b15: ${boundary15Y}, when y: ${relativeToPadCenterY}`
       // );
-      // console.log(
-      //   `b45X: ${boundary45X}, b60X: ${boundary60X}, b75X: ${boundary75X}  when x: ${relativeToPadCenterX}`
-      // );
+      console.log(
+        `b39X: ${boundary39X},b57X: ${boundary57X}, b60X: ${boundary60X}, b129X: ${boundary129X}  when x: ${relativeToPadCenterX}`
+      );
 
-      if (Math.abs(relativeToPadCenterY) < boundary45Y) {
-        // Right side
+      if (
+        relativeToPadCenterY > -boundary15Y &&
+        relativeToPadCenterY < boundary57Y
+      ) {
+        // Right (bottom) side
         handleSwipeColorChange(1);
         setCurrentActionType(1);
 
-        if (-relativeToPadCenterY > boundary15Y) {
-          // setSwipeColorDict(defaultColors);
-          handleSwipeColorChange(1, 16);
-          setCurrentActionType(16);
-        } else if (Math.abs(relativeToPadCenterY) < boundary15Y) {
-          // setSwipeColorDict(defaultColors);
-          handleSwipeColorChange(1, 5);
-          setCurrentActionType(5);
-        } else {
+        if (relativeToPadCenterY < boundary21Y) {
           handleSwipeColorChange(1, 6);
           setCurrentActionType(6);
+        } else {
+          handleSwipeColorChange(1, 7);
+          setCurrentActionType(7);
         }
-      } else if (relativeToPadCenterY > Math.abs(boundary45Y)) {
-        // Bottom
+      } else if (Math.abs(relativeToPadCenterX) < boundary57X) {
+        // Bottom left
         handleSwipeColorChange(2);
         setCurrentActionType(2);
-
-        if (relativeToPadCenterX > boundary75X) {
-          handleSwipeColorChange(2, 7);
-          setCurrentActionType(7);
-        } else if (Math.abs(relativeToPadCenterX) < boundary75X) {
+        if (relativeToPadCenterX > 0) {
           handleSwipeColorChange(2, 8);
           setCurrentActionType(8);
         } else {
           handleSwipeColorChange(2, 9);
           setCurrentActionType(9);
         }
-      } else if (relativeToPadCenterY > boundary45Y) {
-        // Left
+      } else if (
+        relativeToPadCenterY < Math.abs(boundary50Y) &&
+        relativeToPadCenterY > boundary15Y
+      ) {
+        // LEFT
         handleSwipeColorChange(3);
         setCurrentActionType(3);
-
         if (relativeToPadCenterY > Math.abs(boundary15Y)) {
-          // setSwipeColorDict(defaultColors);
           handleSwipeColorChange(3, 10);
           setCurrentActionType(10);
-        } else if (relativeToPadCenterY > boundary15Y) {
-          // setSwipeColorDict(defaultColors);
+        } else {
           handleSwipeColorChange(3, 11);
           setCurrentActionType(11);
-        } else {
-          handleSwipeColorChange(3, 12);
-          setCurrentActionType(12);
         }
-      } else if (relativeToPadCenterY < boundary45Y) {
-        // Top
+      }
+      // NOTE: This part is not complete --> it has turned into a bit of guess an check because we are alternative the dependent variabeles for the boundaries
+      else if (relativeToPadCenterY > Math.abs(boundary15Y)) {
         handleSwipeColorChange(4);
         setCurrentActionType(4);
+      }
+      //  else if (relativeToPadCenterY > Math.abs(boundary45Y)) {
+      //   // Bottom
+      //   handleSwipeColorChange(2);
+      //   setCurrentActionType(2);
 
-        if (relativeToPadCenterX < boundary75X) {
-          handleSwipeColorChange(4, 13);
-          setCurrentActionType(13);
-        } else if (relativeToPadCenterX < Math.abs(boundary75X)) {
-          handleSwipeColorChange(4, 14);
-          setCurrentActionType(14);
-        } else {
-          handleSwipeColorChange(4, 15);
-          setCurrentActionType(15);
-        }
-      } else {
+      //   if (relativeToPadCenterX > boundary75X) {
+      //     handleSwipeColorChange(2, 7);
+      //     setCurrentActionType(7);
+      //   } else if (Math.abs(relativeToPadCenterX) < boundary75X) {
+      //     handleSwipeColorChange(2, 8);
+      //     setCurrentActionType(8);
+      //   } else {
+      //     handleSwipeColorChange(2, 9);
+      //     setCurrentActionType(9);
+      //   }
+      // } else if (relativeToPadCenterY > boundary45Y) {
+      //   // Left
+      //   handleSwipeColorChange(3);
+      //   setCurrentActionType(3);
+
+      //   if (relativeToPadCenterY > Math.abs(boundary15Y)) {
+      //     // setSwipeColorDict(defaultColors);
+      //     handleSwipeColorChange(3, 10);
+      //     setCurrentActionType(10);
+      //   } else if (relativeToPadCenterY > boundary15Y) {
+      //     // setSwipeColorDict(defaultColors);
+      //     handleSwipeColorChange(3, 11);
+      //     setCurrentActionType(11);
+      //   } else {
+      //     handleSwipeColorChange(3, 12);
+      //     setCurrentActionType(12);
+      //   }
+      // } else if (relativeToPadCenterY < boundary45Y) {
+      //   // Top
+      //   handleSwipeColorChange(4);
+      //   setCurrentActionType(4);
+
+      //   if (relativeToPadCenterX < boundary75X) {
+      //     handleSwipeColorChange(4, 13);
+      //     setCurrentActionType(13);
+      //   } else if (relativeToPadCenterX < Math.abs(boundary75X)) {
+      //     handleSwipeColorChange(4, 14);
+      //     setCurrentActionType(14);
+      //   } else {
+      //     handleSwipeColorChange(4, 15);
+      //     setCurrentActionType(15);
+      //   }
+      // }
+      else {
+        // handleSwipeColorChange(4);
+        // setCurrentActionType(4);
         setSwipeColorDict(defaultColors);
       }
     }
@@ -327,7 +362,7 @@ export default function Test10({ navigation }) {
             <Text style={styles.tapText}>Tap anywhere inside this view</Text>
 
             {padVisible && (
-              <SwipePadGeoFunc02
+              <SwipePadGeoFunc03
                 circleRadiusInner={circleRadiusInner}
                 circleRadiusMiddle={circleRadiusMiddle}
                 styleVwMainPosition={styleVwMainPosition}

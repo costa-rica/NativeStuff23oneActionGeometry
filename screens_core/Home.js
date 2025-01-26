@@ -17,6 +17,20 @@ export default function Home({ navigation }) {
       <ScrollView>
         <View style={styles.vwButtons}>
           <BtnHomNav
+            goTo={"Test12"}
+            title={"Test12"}
+            description={
+              "5-10 trianlges: Relying on one axis as dependent var for boundaries "
+            }
+            navigation={navigation}
+          />
+          <BtnHomNav
+            goTo={"Test11"}
+            title={"Test11"}
+            description={"5-10 trianlges: Geometric functions "}
+            navigation={navigation}
+          />
+          <BtnHomNav
             goTo={"Test10"}
             title={"Test10"}
             description={"4-12 trianlges: Geometric functions "}
