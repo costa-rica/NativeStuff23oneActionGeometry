@@ -2,24 +2,26 @@
 
 ## Description
 
-React Native app using gestures and svg with logic using geometry to implement visual boundaries and gesture boundaries
+React Native app using gestures and svg with logic using geometry to implement visual boundaries and gesture boundaries.
+
+- This readme along with the screens/Test12.js (and corresponding components) have important information to implement visual and gesture boundaries in reference to a circle.
+- Notice in the image below the dark lines. These are adjust-able in the Test12.js file, it has code that is well labeled to move the lines so that you can use `sin(theta)` and `cos(theta)` to draw the line using `<Svg>` and `<Polygon>`. Then you can test the boundary with a `tan(theta)` function.
+  ![Test12demo.gif](/docs/Test12demo.gif)
 
 ## Installations
 
-### 1. Navigation
+1. Navigation
 
 ```
 yarn add @react-navigation/native @react-navigation/native-stack
 npx expo install react-native-screens react-native-safe-area-context
 ```
 
-### 2. Gesture
+2. Gesture
+   `yarn add react-native-gesture-handler`
+3. svg
 
-`react-native-gesture-handler`
-
-### 3. svg
-
-`react-native-svg`
+`yarn addreact-native-svg`
 
 ## Key geometric formulas used
 
@@ -29,51 +31,11 @@ npx expo install react-native-screens react-native-safe-area-context
 - General formula to calculate the x value given any y and the degrees from the center origin you wan to extend the line `x_value = y_value / tan((π / 180) × degrees)`
   - For boundaries of 30 degrees I used `y_value = x_value / tan((π / 180) × degrees)`
 
-## Screens / Prototypes
+## Test12.js (Prototype 5-10)
 
-### Test09.js (Prototype 4-8)
-
-- wheel used SwipePadGeoFunc01.js
-- This version uses geometric functions logic
-
-- uses SwipePadGeoFunc01.js
-
-#### Configure of SwipePadGeoFunc01
-
-- styleVwMiddleCircle is transformed `transform: [{ rotate: "-45deg" }],`
-
-### Test10.js (Prototype 4-12)
-
-- wheel used SwipePadGeoFunc02.js
-- This version uses geometric functions logic
-
-- 4 sectors in the middle circle
-- 12 sectors in the outer circle
-- boundaries on gesture align with visual boundaries.
-
-#### Key geometric transformations and formulas
-
-- style outer circle: `transform: [{ rotate: "-15deg" }],`
-- style middle circel: `transform: [{ rotate: "-30deg" }],`
-- boundaries for gesture limits
-
-  - `const boundary15Y = relativeToPadCenterX _ Math.tan((Math.PI / 180) _ 15);`
-  - `const boundary45Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 45); // 8 parts to circle 45 = 360/8`
-
-  - Used in determining top boundaries: `const boundary75X = relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 75));`
-
-### Test11.js (Prototype 5-10)
-
-- This version alternated between using X and Y as the dependent variable for the boundaries
-- It ends up being a bit of guess and check
-- This version uses geometric functions logic
-- 5 sectors in the middle circle
-- 10 sectors in the outer circle
-- boundaries on gesture align with visual boundaries.
-
-### Test12.js (Prototype 5-10)
-
-This version will try to start with one boundary on the right an use the axis to determine all the following boundaries based on the expected degress calcualtions
+- five inner circle sectors, 10 outer circle sectors
+- This file has all the tools and guides to help align visual and gesture boundaries
+- This file starts with one boundary on the right an use the axis to determine all the subsequent boundaries based on the expected degrees calcualtions using tan(theta).
 
 ## Geometry / JavaScript SVG Background and Calculations
 
@@ -117,3 +79,49 @@ Implement that in the SVG below once the Svg is super-imposed on the circle so t
   `const boundary_x_degrees_where_y_coord_is_dependent_variable = relativeToPadCenterX * Math.tan((Math.PI / 180) * x_degrees); `
   - where `relativeToPadCenterX` is any x value in the circle.
   - the result (i.e. `boundary_x_degrees_where_y_coord_is_dependent_variable`) is the corresponding y coordinates of any x along the line that satisfies the x_degrees.
+
+## Other Screens / Prototypes
+
+### Test09.js (Prototype 4-8)
+
+- wheel used SwipePadGeoFunc01.js
+- This version uses geometric functions logic
+
+- uses SwipePadGeoFunc01.js
+
+#### Configure of SwipePadGeoFunc01
+
+- styleVwMiddleCircle is transformed `transform: [{ rotate: "-45deg" }],`
+
+### Test10.js (Prototype 4-12)
+
+- wheel used SwipePadGeoFunc02.js
+- This version uses geometric functions logic
+
+- 4 sectors in the middle circle
+- 12 sectors in the outer circle
+- boundaries on gesture align with visual boundaries.
+
+#### Key geometric transformations and formulas
+
+- style outer circle: `transform: [{ rotate: "-15deg" }],`
+- style middle circel: `transform: [{ rotate: "-30deg" }],`
+- boundaries for gesture limits
+
+  - `const boundary15Y = relativeToPadCenterX _ Math.tan((Math.PI / 180) _ 15);`
+  - `const boundary45Y = relativeToPadCenterX * Math.tan((Math.PI / 180) * 45); // 8 parts to circle 45 = 360/8`
+
+  - Used in determining top boundaries: `const boundary75X = relativeToPadCenterY * (1 / Math.tan((Math.PI / 180) * 75));`
+
+### Test11.js (Prototype 5-10)
+
+- This version alternated between using X and Y as the dependent variable for the boundaries
+- It ends up being a bit of guess and check
+- This version uses geometric functions logic
+- 5 sectors in the middle circle
+- 10 sectors in the outer circle
+- boundaries on gesture align with visual boundaries.
+
+## Another still of the beautiful work 🤩
+
+![Test12screenShot.png](/docs/Test12screenShot.png)
