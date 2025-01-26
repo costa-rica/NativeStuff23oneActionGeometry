@@ -4,7 +4,7 @@
 
 React Native app using gestures and svg with logic using geometry to implement visual boundaries and gesture boundaries.
 
-- This readme along with the screens/Test12.js (and corresponding components) have important information to implement visual and gesture boundaries in reference to a circle.
+- This readme along with the screens/Test12.js (and SwipePadGeoFunc03.js) have important information to implement visual and gesture boundaries in reference to a circle.
 - Notice in the image below the dark lines. These are adjust-able in the Test12.js file, it has code that is well labeled to move the lines so that you can use `sin(theta)` and `cos(theta)` to draw the line using `<Svg>` and `<Polygon>`. Then you can test the boundary with a `tan(theta)` function.
   ![Test12demo.gif](/docs/Test12demo.gif)
 
@@ -36,6 +36,7 @@ npx expo install react-native-screens react-native-safe-area-context
 - five inner circle sectors, 10 outer circle sectors
 - This file has all the tools and guides to help align visual and gesture boundaries
 - This file starts with one boundary on the right an use the axis to determine all the subsequent boundaries based on the expected degrees calcualtions using tan(theta).
+- Swipe pad component used: SwipePadGeoFunc03.js
 
 ## Geometry / JavaScript SVG Background and Calculations
 
